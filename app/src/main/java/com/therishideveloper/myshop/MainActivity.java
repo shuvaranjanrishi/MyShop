@@ -42,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginLlClickAction() {
         startActivity(new Intent(mActivity, LoginActivity.class));
+        finish();
     }
 
     private void registerLlClickAction() {
         startActivity(new Intent(mActivity, RegisterActivity.class));
+        finish();
     }
 }
