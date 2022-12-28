@@ -1,4 +1,4 @@
-package com.therishideveloper.myshop;
+package com.therishideveloper.myshop.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.therishideveloper.myshop.R;
 import com.therishideveloper.myshop.models.UserModel;
 
 import java.util.Objects;

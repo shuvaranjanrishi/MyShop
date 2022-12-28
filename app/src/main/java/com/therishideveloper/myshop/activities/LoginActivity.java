@@ -1,4 +1,4 @@
-package com.therishideveloper.myshop;
+package com.therishideveloper.myshop.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+import com.therishideveloper.myshop.R;
 
 public class LoginActivity extends AppCompatActivity {
 

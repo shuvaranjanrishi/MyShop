@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MyShop"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.MyShop.NoActionBar">
@@ -22,14 +22,14 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".activities.RegisterActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

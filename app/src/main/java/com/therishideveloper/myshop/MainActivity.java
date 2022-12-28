@@ -9,7 +9,9 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
+import com.therishideveloper.myshop.activities.HomeActivity;
+import com.therishideveloper.myshop.activities.LoginActivity;
+import com.therishideveloper.myshop.activities.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
