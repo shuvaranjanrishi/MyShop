@@ -12,14 +12,38 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_profile"
         android:name="com.therishideveloper.myshop.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
+        android:id="@+id/nav_category"
         android:name="com.therishideveloper.myshop.ui.category.CategoryFragment"
         android:label="@string/menu_category"
         tools:layout="@layout/fragment_category" />
+
+    <fragment
+        android:id="@+id/nav_offer"
+        android:name="com.therishideveloper.myshop.OffersFragment"
+        android:label="@string/menu_offer"
+        tools:layout="@layout/fragment_offers" />
+
+    <fragment
+        android:id="@+id/nav_new_product"
+        android:name="com.therishideveloper.myshop.NewProductFragment"
+        android:label="@string/menu_new_product"
+        tools:layout="@layout/fragment_new_product" />
+
+    <fragment
+        android:id="@+id/nav_my_order"
+        android:name="com.therishideveloper.myshop.MyOrderFragment"
+        android:label="@string/menu_my_order"
+        tools:layout="@layout/fragment_my_order" />
+
+    <fragment
+        android:id="@+id/nav_my_cart"
+        android:name="com.therishideveloper.myshop.MyCartFragment"
+        android:label="@string/menu_my_cart"
+        tools:layout="@layout/fragment_my_cart" />
 </navigation>
