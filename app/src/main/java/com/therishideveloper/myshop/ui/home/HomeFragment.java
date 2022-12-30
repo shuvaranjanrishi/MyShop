@@ -43,6 +43,9 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.scrollView.setVisibility(View.GONE);
+
         db = FirebaseFirestore.getInstance();
         popularProductList = new ArrayList<>();
         productCategoryList = new ArrayList<>();
@@ -66,6 +69,8 @@ public class HomeFragment extends Fragment {
                     }else {
                         Toast.makeText(getActivity(), "Error..."+task.getException(), Toast.LENGTH_SHORT).show();
                     }
+                    binding.progressBar.setVisibility(View.GONE);
+                    binding.scrollView.setVisibility(View.VISIBLE);
                 });
 
         db.collection("ProductCategory")
