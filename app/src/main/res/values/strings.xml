@@ -36,4 +36,7 @@
     <string name="recommended_products">Recommended</string>
     <string name="description">Description</string>
     <string name="price">Price</string>
+    <string name="phone">Phone</string>
+    <string name="address">Address</string>
+    <string name="update">Update</string>
 </resources>
