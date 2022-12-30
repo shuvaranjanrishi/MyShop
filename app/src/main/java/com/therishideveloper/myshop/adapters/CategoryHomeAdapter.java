@@ -16,29 +16,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.therishideveloper.myshop.R;
-import com.therishideveloper.myshop.models.ProductCategory;
+import com.therishideveloper.myshop.models.CategoryHome;
 
 import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
+public class CategoryHomeAdapter extends RecyclerView.Adapter<CategoryHomeAdapter.ViewHolder> {
 
     private final Context context;
-    private final List<ProductCategory> productCategoryList;
+    private final List<CategoryHome> productCategoryList;
 
-    public CategoryAdapter(Context context, List<ProductCategory> productCategoryList) {
+    public CategoryHomeAdapter(Context context, List<CategoryHome> productCategoryList) {
         this.context = context;
         this.productCategoryList = productCategoryList;
     }
 
     @NonNull
     @Override
-    public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_category, parent, false));
+    public CategoryHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_category_home, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
-        ProductCategory productCategory = productCategoryList.get(position);
+    public void onBindViewHolder(@NonNull CategoryHomeAdapter.ViewHolder holder, int position) {
+        CategoryHome productCategory = productCategoryList.get(position);
 
         holder.nameTv.setText(""+productCategory.getName());
         Picasso.get()

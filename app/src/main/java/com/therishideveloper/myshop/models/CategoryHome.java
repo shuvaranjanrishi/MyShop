@@ -4,14 +4,14 @@ package com.therishideveloper.myshop.models;
     Created by Shuva Ranjan Rishi on 12/29/2022
 */
 
-public class ProductCategory {
+public class CategoryHome {
 
     private String name, type, imageUrl;
 
-    public ProductCategory() {
+    public CategoryHome() {
     }
 
-    public ProductCategory(String name, String type, String imageUrl) {
+    public CategoryHome(String name, String type, String imageUrl) {
         this.name = name;
         this.type = type;
         this.imageUrl = imageUrl;
