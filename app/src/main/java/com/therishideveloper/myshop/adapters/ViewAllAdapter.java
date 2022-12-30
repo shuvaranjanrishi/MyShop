@@ -43,8 +43,12 @@ public class ViewAllAdapter extends RecyclerView.Adapter<ViewAllAdapter.ViewHold
 
         holder.nameTv.setText(""+viewAllModel.getName());
         holder.descriptionTv.setText(""+viewAllModel.getDescription());
-        holder.priceTv.setText("$ "+viewAllModel.getPrice());
         holder.ratingTv.setText("$ "+viewAllModel.getRating());
+        holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/kg");
+        if(viewAllModel.getType().equals("Milk")) holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/liter");
+        if(viewAllModel.getType().equals("Eggs")) holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/dozen");
+        if(viewAllModel.getType().equals("Drinks")) holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/bottle");
+
         Picasso.get()
                 .load(viewAllModel.getImageUrl())
                 .placeholder(R.drawable.fruits)

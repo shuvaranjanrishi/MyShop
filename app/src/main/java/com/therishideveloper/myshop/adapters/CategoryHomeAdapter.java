@@ -5,6 +5,7 @@ package com.therishideveloper.myshop.adapters;
 */
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.therishideveloper.myshop.R;
+import com.therishideveloper.myshop.activities.ViewAllActivity;
 import com.therishideveloper.myshop.models.CategoryHome;
 
 import java.util.List;
@@ -45,6 +47,12 @@ public class CategoryHomeAdapter extends RecyclerView.Adapter<CategoryHomeAdapte
                 .load(productCategory.getImageUrl())
                 .placeholder(R.drawable.fruits)
                 .into(holder.categoryIv);
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ViewAllActivity.class);
+            intent.putExtra("TYPE",productCategory.getType());
+            context.startActivity(intent);
+        });
     }
 
     @Override
