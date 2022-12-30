@@ -22,8 +22,8 @@ import java.util.List;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHolder> {
 
-    private Context context;
-    private List<PopularModel> popularProductList;
+    private final Context context;
+    private final List<PopularModel> popularProductList;
 
     public PopularAdapter(Context context, List<PopularModel> popularProductList) {
         this.context = context;
@@ -46,7 +46,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
         holder.discountTv.setText("Discount "+popularProduct.getDiscount()+"% Off");
         Picasso.get()
                 .load(popularProduct.getImageUrl())
-                .placeholder(R.drawable.fruits)
+                .placeholder(R.drawable.ic_baseline_image_24)
                 .into(holder.productIv);
     }
 
