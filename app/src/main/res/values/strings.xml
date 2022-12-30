@@ -40,4 +40,7 @@
     <string name="address">Address</string>
     <string name="update">Update</string>
     <string name="discount">Discount :</string>
+    <string name="empty_msg">Sorry There is no new Product yet</string>
+    <string name="empty_msg_cart">You Cart is Empty</string>
+    <string name="empty_msg_order">You have not purchased anything yet</string>
 </resources>
