@@ -2,23 +2,38 @@ package com.therishideveloper.myshop.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.therishideveloper.myshop.R;
 import com.therishideveloper.myshop.databinding.ActivityHomeBinding;
+import com.therishideveloper.myshop.models.UserModel;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
+
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +42,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarHome.toolbar);
 
+        database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_profile, R.id.nav_category,
-                R.id.nav_offer, R.id.nav_new_product, R.id.nav_my_order,R.id.nav_my_cart
+                R.id.nav_offer, R.id.nav_new_product, R.id.nav_my_order, R.id.nav_my_cart
         )
                 .setOpenableLayout(drawer)
                 .build();
@@ -40,6 +58,36 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        View view = navigationView.getHeaderView(0);
+        CircleImageView profileIv = view.findViewById(R.id.profileIv);
+        TextView nameTv = view.findViewById(R.id.nameTv);
+        TextView emailTv = view.findViewById(R.id.emailTv);
+
+        getProfileData(profileIv, nameTv, emailTv);
+
+    }
+
+    private void getProfileData(CircleImageView profileIv, TextView nameTv, TextView emailTv) {
+        DatabaseReference reference = database.getReference("Users").child("Admin");
+        reference.child(auth.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserModel userModel = snapshot.getValue(UserModel.class);
+                        Picasso.get()
+                                .load(userModel.getImageUrl())
+                                .placeholder(R.drawable.profile)
+                                .into(profileIv);
+                        nameTv.setText("" + userModel.getName());
+                        emailTv.setText("" + userModel.getEmail());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     @Override
