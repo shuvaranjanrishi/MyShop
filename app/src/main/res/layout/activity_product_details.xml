@@ -135,6 +135,6 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20sp"
             android:background="@drawable/btn_bg_detailed"
-            android:text="Add To Cart" />
+            android:text="@string/add_to_cart" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,6 +70,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         binding.addToCartBtn.setOnClickListener(view -> {
 
+            totalPrice = price * quantity;
+
             String currentDate, currentTime;
             Calendar calendar = Calendar.getInstance();
 
@@ -105,6 +107,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     .into(binding.productIv);
             price = Double.parseDouble(viewAllModel.getPrice());
             binding.priceTv.setText("$ " + viewAllModel.getPrice() + "/kg");
+
             if (viewAllModel.getType().equals("Milk"))
                 binding.priceTv.setText("$ " + price + "/liter");
             if (viewAllModel.getType().equals("Eggs"))
