@@ -5,6 +5,7 @@ package com.therishideveloper.myshop.adapters;
 */
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.therishideveloper.myshop.R;
-import com.therishideveloper.myshop.models.CategoryHome;
+import com.therishideveloper.myshop.activities.ProductDetailsActivity;
 import com.therishideveloper.myshop.models.ViewAllModel;
 
 import java.util.List;
@@ -41,18 +42,27 @@ public class ViewAllAdapter extends RecyclerView.Adapter<ViewAllAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewAllAdapter.ViewHolder holder, int position) {
         ViewAllModel viewAllModel = viewAllModelList.get(position);
 
-        holder.nameTv.setText(""+viewAllModel.getName());
-        holder.descriptionTv.setText(""+viewAllModel.getDescription());
-        holder.ratingTv.setText("$ "+viewAllModel.getRating());
-        holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/kg");
-        if(viewAllModel.getType().equals("Milk")) holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/liter");
-        if(viewAllModel.getType().equals("Eggs")) holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/dozen");
-        if(viewAllModel.getType().equals("Drinks")) holder.priceTv.setText("$ "+viewAllModel.getPrice()+"/bottle");
+        holder.nameTv.setText("" + viewAllModel.getName());
+        holder.descriptionTv.setText("" + viewAllModel.getDescription());
+        holder.ratingTv.setText("$ " + viewAllModel.getRating());
+        holder.priceTv.setText("$ " + viewAllModel.getPrice() + "/kg");
+        if (viewAllModel.getType().equals("Milk"))
+            holder.priceTv.setText("$ " + viewAllModel.getPrice() + "/liter");
+        if (viewAllModel.getType().equals("Eggs"))
+            holder.priceTv.setText("$ " + viewAllModel.getPrice() + "/dozen");
+        if (viewAllModel.getType().equals("Drinks"))
+            holder.priceTv.setText("$ " + viewAllModel.getPrice() + "/bottle");
 
         Picasso.get()
                 .load(viewAllModel.getImageUrl())
                 .placeholder(R.drawable.fruits)
                 .into(holder.productIv);
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ProductDetailsActivity.class);
+            intent.putExtra("PRODUCT_DETAILS", viewAllModel);
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -63,7 +73,7 @@ public class ViewAllAdapter extends RecyclerView.Adapter<ViewAllAdapter.ViewHold
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView productIv;
-        public TextView nameTv,descriptionTv,ratingTv,priceTv;
+        public TextView nameTv, descriptionTv, ratingTv, priceTv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

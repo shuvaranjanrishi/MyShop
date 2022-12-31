@@ -4,7 +4,9 @@ package com.therishideveloper.myshop.models;
     Created by Shuva Ranjan Rishi on 12/30/2022
 */
 
-public class ViewAllModel {
+import java.io.Serializable;
+
+public class ViewAllModel implements Serializable {
 
     private String name,description,type,rating,price,imageUrl;
 
