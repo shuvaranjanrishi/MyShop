@@ -57,11 +57,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
         inTotalPrice = inTotalPrice + totalPrice;
 
-//        Intent intent = new Intent("MY_IN_TOTAL_PRICE");
-//        intent.putExtra("TOTAL_ITEMS", cartModelList.size());
-//        intent.putExtra("IN_TOTAL_PRICE", inTotalPrice);
-//        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
-
         holder.binding.deleteBtn.setOnClickListener(view -> db.collection("MyCart")
                 .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
                 .collection("CurrentUser")

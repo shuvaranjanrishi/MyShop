@@ -66,6 +66,7 @@ public class MyCartFragment extends Fragment {
                             .collection("Items")
                             .add(map)
                             .addOnCompleteListener(task -> Toast.makeText(getActivity(), "Order Submitted...", Toast.LENGTH_SHORT).show());
+
                 }
             }
         });
@@ -114,19 +115,6 @@ public class MyCartFragment extends Fragment {
         };
         cartAdapter.setListener(listener);
 
-
-//        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                int totalItems = intent.getIntExtra("TOTAL_ITEMS", 0);
-//                double inTotalPrice = intent.getDoubleExtra("IN_TOTAL_PRICE", 0);
-//                binding.totalItemTv.setText("Total Items: " + totalItems);
-//                binding.totalPriceTv.setText("Total Price: $" + inTotalPrice);
-//            }
-//        };
-//
-//        LocalBroadcastManager.getInstance(requireActivity()).registerReceiver(broadcastReceiver, new IntentFilter("MY_IN_TOTAL_PRICE"));
-
     }
 
     private void initVariables() {
@@ -138,8 +126,6 @@ public class MyCartFragment extends Fragment {
         binding.cartRv.setAdapter(cartAdapter);
         binding.footerRl.setVisibility(View.GONE);
     }
-
-
 
     @Override
     public void onDestroyView() {

@@ -7,13 +7,32 @@ package com.therishideveloper.myshop.models;
 
 public class UserModel {
 
-    public String id, name, email, password;
+    public String id, name, email, password,profileImageUrl;
+
+    public UserModel() {
+    }
 
     public UserModel(String id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public UserModel(String id, String name, String email, String password, String profileImageUrl) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.profileImageUrl = imageUrl;
     }
 
     public String getId() {
