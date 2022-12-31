@@ -1,5 +1,6 @@
 package com.therishideveloper.myshop.activities;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,10 +76,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             String currentDate, currentTime;
             Calendar calendar = Calendar.getInstance();
 
-            SimpleDateFormat dateFormat =  new SimpleDateFormat("dd-MM-yyyy");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat =  new SimpleDateFormat("dd-MM-yyyy");
             currentDate = dateFormat.format(calendar.getTime());
 
-            SimpleDateFormat timeFormat  =  new SimpleDateFormat("hh:mm:ss a");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat timeFormat  =  new SimpleDateFormat("hh:mm:ss a");
             currentTime = timeFormat.format(calendar.getTime());
 
             Map<String,Object> map = new HashMap<>();
@@ -93,6 +94,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void getIntentData() {
         final Object object = getIntent().getSerializableExtra("PRODUCT_DETAILS");
 

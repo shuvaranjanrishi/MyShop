@@ -17,6 +17,8 @@ import com.therishideveloper.myshop.adapters.RecommendedAdapter;
 import com.therishideveloper.myshop.databinding.FragmentCategoryBinding;
 import com.therishideveloper.myshop.models.CategoryHome;
 import com.therishideveloper.myshop.models.CategoryNav;
+import com.therishideveloper.myshop.utils.DialogUtils;
+import com.therishideveloper.myshop.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +34,28 @@ public class CategoryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentCategoryBinding.inflate(inflater, container, false);
 
-        binding.progressBar.setVisibility(View.VISIBLE);
+        initVariables();
+
+        getCategoryData();
+
+        return binding.getRoot();
+    }
+
+    private void initVariables() {
         binding.categoryNavRv.setVisibility(View.GONE);
 
         db = FirebaseFirestore.getInstance();
         categoryNavList = new ArrayList<>();
         categoryNavAdapter = new CategoryNavAdapter(getActivity(),categoryNavList);
         binding.categoryNavRv.setAdapter(categoryNavAdapter);
+    }
+
+    private void getCategoryData() {
+        if (!NetworkUtils.checkInternet(requireActivity())) {
+            DialogUtils.showNoInternetDialog(requireActivity());
+            return;
+        }
+        binding.progressBar.setVisibility(View.VISIBLE);
 
         db.collection("CategoryNav")
                 .get()
@@ -55,8 +72,6 @@ public class CategoryFragment extends Fragment {
                     binding.progressBar.setVisibility(View.GONE);
                     binding.categoryNavRv.setVisibility(View.VISIBLE);
                 });
-
-        return binding.getRoot();
     }
 
     @Override

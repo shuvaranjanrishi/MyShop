@@ -19,6 +19,8 @@ import com.therishideveloper.myshop.databinding.FragmentHomeBinding;
 import com.therishideveloper.myshop.models.PopularModel;
 import com.therishideveloper.myshop.models.CategoryHome;
 import com.therishideveloper.myshop.models.RecommendedModel;
+import com.therishideveloper.myshop.utils.DialogUtils;
+import com.therishideveloper.myshop.utils.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,23 +36,23 @@ public class HomeFragment extends Fragment {
     private RecommendedAdapter recommendedAdapter;
     private FirebaseFirestore db;
 
-    @SuppressLint("NotifyDataSetChanged")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
-        binding.progressBar.setVisibility(View.VISIBLE);
-        binding.scrollView.setVisibility(View.GONE);
+        initVariables();
 
-        db = FirebaseFirestore.getInstance();
-        popularProductList = new ArrayList<>();
-        productCategoryList = new ArrayList<>();
-        recommendedModelList = new ArrayList<>();
-        popularAdapter = new PopularAdapter(getActivity(),popularProductList);
-        binding.popularProductsRv.setAdapter(popularAdapter);
-        categoryAdapter = new CategoryHomeAdapter(getActivity(),productCategoryList);
-        binding.categoryHomeRv.setAdapter(categoryAdapter);
-        recommendedAdapter = new RecommendedAdapter(getActivity(),recommendedModelList);
-        binding.recommendProductsRv.setAdapter(recommendedAdapter);
+        getAllData();
+
+        return binding.getRoot();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void getAllData() {
+        if (!NetworkUtils.checkInternet(requireActivity())) {
+            DialogUtils.showNoInternetDialog(requireActivity());
+            return;
+        }
+        binding.progressBar.setVisibility(View.VISIBLE);
 
         db.collection("PopularProducts")
                 .get()
@@ -95,8 +97,20 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getActivity(), "Error..."+task.getException(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
 
-        return binding.getRoot();
+    private void initVariables() {
+        binding.scrollView.setVisibility(View.GONE);
+        db = FirebaseFirestore.getInstance();
+        popularProductList = new ArrayList<>();
+        productCategoryList = new ArrayList<>();
+        recommendedModelList = new ArrayList<>();
+        popularAdapter = new PopularAdapter(getActivity(),popularProductList);
+        binding.popularProductsRv.setAdapter(popularAdapter);
+        categoryAdapter = new CategoryHomeAdapter(getActivity(),productCategoryList);
+        binding.categoryHomeRv.setAdapter(categoryAdapter);
+        recommendedAdapter = new RecommendedAdapter(getActivity(),recommendedModelList);
+        binding.recommendProductsRv.setAdapter(recommendedAdapter);
     }
 
     @Override

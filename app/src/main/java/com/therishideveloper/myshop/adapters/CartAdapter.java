@@ -4,55 +4,81 @@ package com.therishideveloper.myshop.adapters;
     Created by Shuva Ranjan Rishi on 12/31/2022
 */
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.therishideveloper.myshop.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.therishideveloper.myshop.databinding.ItemCartBinding;
 import com.therishideveloper.myshop.models.CartModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     private final Context context;
     private final List<CartModel> cartModelList;
     private double inTotalPrice = 0.0;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+    public CartItemListener cartItemListener;
 
     public CartAdapter(Context context, List<CartModel> cartModelList) {
         this.context = context;
         this.cartModelList = cartModelList;
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_cart, parent, false));
+        return new ViewHolder(ItemCartBinding.inflate(LayoutInflater.from(context), parent, false));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartModel cartModel = cartModelList.get(position);
 
-        holder.nameTv.setText("" + cartModel.getProductName());
-        holder.unitPriceTv.setText("" + cartModel.getProductPrice());
-        holder.quantityTv.setText("" + cartModel.getProductQuantity());
+        holder.binding.productNameTv.setText("" + cartModel.getProductName());
+        holder.binding.unitPriceTv.setText("" + cartModel.getProductPrice());
+        holder.binding.quantityTv.setText("" + cartModel.getProductQuantity());
         double totalPrice = Double.parseDouble(cartModel.getTotalPrice());
-        holder.totalPriceTv.setText("" + totalPrice);
+        holder.binding.totalPriceTv.setText("" + totalPrice);
 
         inTotalPrice = inTotalPrice + totalPrice;
 
-        Intent intent = new Intent("MY_IN_TOTAL_PRICE");
-        intent.putExtra("TOTAL_ITEMS", cartModelList.size());
-        intent.putExtra("IN_TOTAL_PRICE", inTotalPrice);
-        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+//        Intent intent = new Intent("MY_IN_TOTAL_PRICE");
+//        intent.putExtra("TOTAL_ITEMS", cartModelList.size());
+//        intent.putExtra("IN_TOTAL_PRICE", inTotalPrice);
+//        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
+        holder.binding.deleteBtn.setOnClickListener(view -> db.collection("MyCart")
+                .document(Objects.requireNonNull(auth.getCurrentUser()).getUid())
+                .collection("CurrentUser")
+                .document(cartModel.getDocumentId())
+                .delete()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        cartModelList.remove(cartModel);
+                        notifyDataSetChanged();
+                        inTotalPrice = 0;
+                        Toast.makeText(context, "Item Deleted...", Toast.LENGTH_SHORT).show();
+                    }
+                }));
+
+        if (cartItemListener != null) {
+            cartItemListener.onChange(cartModelList.size(), inTotalPrice);
+        }
     }
 
     @Override
@@ -62,15 +88,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView nameTv, unitPriceTv, quantityTv, totalPriceTv;
+        public ItemCartBinding binding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            nameTv = itemView.findViewById(R.id.productNameTv);
-            unitPriceTv = itemView.findViewById(R.id.unitPriceTv);
-            quantityTv = itemView.findViewById(R.id.quantityTv);
-            totalPriceTv = itemView.findViewById(R.id.totalPriceTv);
+        public ViewHolder(@NonNull ItemCartBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
+    }
+
+    public interface CartItemListener {
+        void onChange(int totalItems, double inTotalPrice);
+    }
+
+    public void setListener(CartItemListener cartItemListener) {
+        this.cartItemListener = cartItemListener;
     }
 }

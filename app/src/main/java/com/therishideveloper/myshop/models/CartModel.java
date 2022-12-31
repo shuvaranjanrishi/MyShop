@@ -6,7 +6,7 @@ package com.therishideveloper.myshop.models;
 
 public class CartModel {
 
-    private String productName, productPrice, productQuantity, totalPrice, currentDate, currentTime;
+    private String documentId, productName, productPrice, productQuantity, totalPrice, currentDate, currentTime;
 
     public CartModel() {
     }
@@ -18,6 +18,14 @@ public class CartModel {
         this.totalPrice = totalPrice;
         this.currentDate = currentDate;
         this.currentTime = currentTime;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 
     public String getProductName() {
