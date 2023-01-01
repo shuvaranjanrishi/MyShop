@@ -6,17 +6,44 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        app:civ_border_width="2dp"
-        app:civ_border_color="@color/purple_700"
-        android:id="@+id/profileIv"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/profile"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="80dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/profileIv"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:contentDescription="@string/nav_header_desc"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/onlineIv"
+                android:visibility="gone"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/indicator_online_status"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
 
     <EditText
         android:id="@+id/nameEt"
@@ -32,7 +59,7 @@
         app:drawableStartCompat="@drawable/ic_baseline_person_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileIv"
+        app:layout_constraintTop_toBottomOf="@+id/profileCv"
         app:layout_constraintWidth_percent=".8" />
 
     <EditText

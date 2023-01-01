@@ -109,8 +109,12 @@ public class MyCartFragment extends Fragment {
 
                 });
 
-        CartAdapter.CartItemListener listener = (totalItems, inTotalPrice) -> {
-            binding.totalItemTv.setText("Total Items: " + totalItems);
+        CartAdapter.CartItemListener listener = (cartModelList) -> {
+            double inTotalPrice = 0.0;
+            for(CartModel cartModel : cartModelList){
+                inTotalPrice =inTotalPrice + Double.parseDouble(cartModel.getTotalPrice());
+            }
+            binding.totalItemTv.setText("Total Items: " + cartModelList.size());
             binding.totalPriceTv.setText("Total Price: $" + inTotalPrice);
         };
         cartAdapter.setListener(listener);

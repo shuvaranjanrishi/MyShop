@@ -48,6 +48,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="5dp"
         android:id="@+id/cartRv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -57,6 +58,7 @@
 
     <RelativeLayout
         android:id="@+id/footerRl"
+        android:layout_marginTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"

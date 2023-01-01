@@ -3,6 +3,7 @@ package com.therishideveloper.myshop.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,8 @@ import com.therishideveloper.myshop.models.UserModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private static final String TAG = "HomeActivity";
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomeBinding binding;
@@ -55,30 +58,33 @@ public class HomeActivity extends AppCompatActivity {
                 .setOpenableLayout(drawer)
                 .build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
+        NavController navController = Navigation.findNavController(this, R.id.fragmentContainer);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         View view = navigationView.getHeaderView(0);
-        CircleImageView profileIv = view.findViewById(R.id.profileIv);
+        ImageView profileIv = view.findViewById(R.id.profileIv);
+        ImageView onlineIv = view.findViewById(R.id.onlineIv);
         TextView nameTv = view.findViewById(R.id.nameTv);
         TextView emailTv = view.findViewById(R.id.emailTv);
 
-        getProfileData(profileIv, nameTv, emailTv);
+        getProfileData(profileIv,onlineIv, nameTv, emailTv);
 
     }
 
-    private void getProfileData(CircleImageView profileIv, TextView nameTv, TextView emailTv) {
+    private void getProfileData(ImageView profileIv, ImageView onlineIv, TextView nameTv, TextView emailTv) {
         DatabaseReference reference = database.getReference("Users").child("Admin");
         reference.child(auth.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserModel userModel = snapshot.getValue(UserModel.class);
+                        assert userModel != null;
                         Picasso.get()
-                                .load(userModel.getImageUrl())
+                                .load(userModel.getProfileImageUrl())
                                 .placeholder(R.drawable.profile)
                                 .into(profileIv);
+                        if(userModel.isOnline()) onlineIv.setVisibility(View.VISIBLE);
                         nameTv.setText("" + userModel.getName());
                         emailTv.setText("" + userModel.getEmail());
                     }
@@ -98,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home);
+        NavController navController = Navigation.findNavController(this, R.id.fragmentContainer);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 }

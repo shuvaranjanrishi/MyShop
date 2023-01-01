@@ -56,15 +56,17 @@ public class ProfileFragment extends Fragment {
 
     private void getProfileData() {
         DatabaseReference reference = database.getReference("Users").child("Admin");
-        reference.child(auth.getUid())
+        reference.child(Objects.requireNonNull(auth.getUid()))
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         UserModel userModel = snapshot.getValue(UserModel.class);
+                        assert userModel != null;
                         Picasso.get()
-                                .load(userModel.getImageUrl())
+                                .load(userModel.getProfileImageUrl())
                                 .placeholder(R.drawable.profile)
                                 .into(binding.profileIv);
+                        if(userModel.isOnline()) binding.onlineIv.setVisibility(View.VISIBLE);
                     }
 
                     @Override

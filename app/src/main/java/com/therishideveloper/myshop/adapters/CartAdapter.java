@@ -27,8 +27,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private final Context context;
     private final List<CartModel> cartModelList;
     private double inTotalPrice = 0.0;
-    private FirebaseAuth auth;
-    private FirebaseFirestore db;
+    private final FirebaseAuth auth;
+    private final FirebaseFirestore db;
     public CartItemListener cartItemListener;
 
     public CartAdapter(Context context, List<CartModel> cartModelList) {
@@ -72,7 +72,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 }));
 
         if (cartItemListener != null) {
-            cartItemListener.onChange(cartModelList.size(), inTotalPrice);
+            cartItemListener.onChange(cartModelList);
         }
     }
 
@@ -92,7 +92,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
     public interface CartItemListener {
-        void onChange(int totalItems, double inTotalPrice);
+        void onChange(List<CartModel> cartModelList);
     }
 
     public void setListener(CartItemListener cartItemListener) {
